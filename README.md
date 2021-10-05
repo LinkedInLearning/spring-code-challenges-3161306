@@ -1,5 +1,4 @@
-# About
-Spring Code Challenges
+# Spring Code Challenges
 This is the repository for the LinkedIn Learning course `About
 Spring Code Challenges`. The full course is available from [LinkedIn Learning][lil-course-url].
 
