@@ -1,5 +1,6 @@
 package com.cecilireid.springchallenges;
 
+import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -55,5 +56,11 @@ public class CateringJobController {
 
     public Mono<String> getSurpriseImage() {
         return null;
+    }
+
+    @ExceptionHandler(HttpClientErrorException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleClientException() {
+        return "Not Found: Please try again";
     }
 }
