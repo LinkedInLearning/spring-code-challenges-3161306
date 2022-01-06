@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -49,8 +50,22 @@ public class CateringJobController {
         return null;
     }
 
-    public CateringJob patchCateringJob(Long id, JsonNode json) {
-        return null;
+    @PatchMapping("/{id}")
+    @ResponseBody
+    public CateringJob patchCateringJob(@PathVariable Long id, @RequestBody JsonNode json) {
+        Optional<CateringJob> optionalJob = cateringJobRepository.findById(id);
+        if (optionalJob.isPresent()) {
+            CateringJob job = optionalJob.get();
+            JsonNode menu = json.get("menu");
+            if (menu != null) {
+                job.setMenu(menu.asText());
+                return cateringJobRepository.save(job);
+            } else {
+                throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+        }
     }
 
     public Mono<String> getSurpriseImage() {
