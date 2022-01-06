@@ -45,8 +45,15 @@ public class CateringJobController {
         return null;
     }
 
-    public CateringJob updateCateringJob(CateringJob cateringJob, Long id) {
-        return null;
+    @PutMapping("/{id}")
+    @ResponseBody
+    public CateringJob updateCateringJob(@RequestBody CateringJob cateringJob, @PathVariable Long id) {
+        if (cateringJobRepository.existsById(id)) {
+            cateringJob.setId(id);
+            return cateringJobRepository.save(cateringJob);
+        } else {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+        }
     }
 
     public CateringJob patchCateringJob(Long id, JsonNode json) {
