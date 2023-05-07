@@ -37,8 +37,9 @@ public class CateringJobController {
         }
     }
 
-    public List<CateringJob> getCateringJobsByStatus(Status status) {
-        return null;
+    @GetMapping("/findbyStatus")
+    public List<CateringJob> getCateringJobsByStatus(@RequestParam Status status) {
+        return cateringJobRepository.findByStatus(status);
     }
 
     public CateringJob createCateringJob(CateringJob job) {
